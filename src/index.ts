@@ -26,6 +26,7 @@ class Cache {
 
   async set(key: string, value: Buffer, ttl?: number) {
     if (!ttl) ttl = this.ttl
+    if (!value || value.length === 0) return
 
     try {
       const now = new Date().getTime() / 1000
