@@ -1,7 +1,7 @@
 {
-  "name": "redis-cache",
-  "version": "0.1.0",
-  "description": "A redis cache",
+  "name": "@next-boost/redis-cache",
+  "version": "0.1.1",
+  "description": "Official redis cache for next-boost",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -25,12 +25,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    "fs-extra": "^10.0.0",
     "ioredis": "^4.28.2"
   },
   "devDependencies": {
     "@types/chai": "^4.2.12",
-    "@types/fs-extra": "^9.0.1",
     "@types/ioredis": "^4.28.2",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.7.10",
