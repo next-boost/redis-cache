@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/@next-boost/redis-cache/badge.svg?branch=master)](https://coveralls.io/github/@next-boost/redis-cache?branch=master) [![Maintainability](https://api.codeclimate.com/v1/badges/270469eb02421e5c7547/maintainability)](https://codeclimate.com/github/@next-boost/redis-cache/maintainability)
+[![Coverage Status](https://coveralls.io/repos/github/@next-boost/redis-cache/badge.svg?branch=master)](https://coveralls.io/github/next-boost/redis-cache?branch=master) [![Maintainability](https://api.codeclimate.com/v1/badges/853b19631069cf943e89/maintainability)](https://codeclimate.com/github/next-boost/redis-cache/maintainability)
 
 # redis-cache
 
