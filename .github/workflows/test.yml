@@ -21,6 +21,11 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
+    - name: create .env file
+      run: |
+        touch .env
+        echo REDIS_URL=${{ secrets.REDIS_URL }} >> .env
+
     - name: Install npm dependencies
       run: yarn
 
