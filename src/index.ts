@@ -1,5 +1,7 @@
 import Redis from 'ioredis'
 
+export { Adapter } from './adapter'
+
 type CacheStatus = 'hit' | 'stale' | 'miss'
 
 export interface CacheOptions {
