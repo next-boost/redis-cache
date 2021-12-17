@@ -69,6 +69,26 @@ class Cache {
       console.error(e)
     }
   }
+
+  async inc(label: string) {
+    try {
+      await this.redis.incr(label)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  async count(labels: Array<string>) {
+    try {
+      const rv = await this.redis.mget(labels)
+      return rv
+        ? rv.map((x) => (x ? Number(x) : 0))
+        : new Array(labels.length).fill(0)
+    } catch (e) {
+      console.error(e)
+      return new Array(labels.length).fill(0)
+    }
+  }
 }
 
 export default Cache

@@ -9,8 +9,12 @@ export const sleep = async (t: number) => {
 describe('redis cache with ttl', () => {
   let cache: Cache
 
-  it('init', () => {
+  before(async () => {
     cache = new Cache({ uri: process.env.REDIS_URL, ttl: 100, tbd: 300 })
+
+    await cache.del('miss')
+    await cache.del('hit')
+    await cache.del('stale')
   })
 
   after(async () => {
@@ -58,5 +62,14 @@ describe('redis cache with ttl', () => {
     await cache.del('A')
     expect(await cache.get('A')).to.be.undefined
     await cache.del('not-exist')
+  })
+
+  it('inc, count', async () => {
+    await cache.inc('miss')
+    expect(await cache.count(['miss'])).to.deep.eq([1])
+
+    await cache.inc('hit')
+    await cache.inc('miss')
+    expect(await cache.count(['miss', 'hit', 'stale'])).to.deep.eq([2, 1, 0])
   })
 })
