@@ -26,21 +26,13 @@ module.exports = {
 }
 ```
 
-## Redis Cluster config
+## Passing your own Redis Client
+
+You can also provide an [ioredis](https://github.com/luin/ioredis) client or or cluster instance if you need advanced configuration
 
 ```javascript
 cacheAdapter: RedisCache.init({
-    cluster: [
-      {
-        host: '<your-host>'
-        port: '<your-port>'
-      },
-      {
-        host: '<your-host-2>'
-        port: '<your-port-2>'
-      },
-      ...
-    ],
+    redis: new Redis.Cluster({...}),
     ttl: 15,
     tbd: 3600,
 })

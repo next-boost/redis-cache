@@ -1,4 +1,6 @@
 import { expect } from 'chai'
+import { readdirSync } from 'fs'
+import Redis from 'ioredis'
 
 import Cache from '../src'
 
@@ -14,25 +16,31 @@ const configs = [
     title: 'redis cache with ttl',
   },
   {
-    cluster: [
+    redis: new Redis.Cluster([
       {
         host: process.env.REDIS_CLUSER_HOST || '127.0.0.1 ',
         port: Number.parseInt(process.env.REDIS_CLUSTER_PORT || '6379'),
       },
-    ],
+    ]),
     ttl: 100,
     tbd: 30,
-    title: 'redis cluster cache with ttl',
+    title: 'provided redis cluster cache with ttl',
+  },
+  {
+    redis: new Redis(process.env.REDIS_URL),
+    ttl: 100,
+    tbd: 30,
+    title: 'provided redis client cache with ttl',
   },
 ]
 
 for (const config of configs) {
   describe(config.title, () => {
     let cache: Cache
-    const { uri, ttl, tbd, cluster } = config
+    const { uri, ttl, tbd, redis } = config
     before(async () => {
       const start = Date.now()
-      cache = new Cache({ uri, ttl, tbd, cluster })
+      cache = new Cache({ uri, ttl, tbd, redis })
 
       await cache.del('miss')
       await cache.del('hit')

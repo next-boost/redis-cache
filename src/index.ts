@@ -8,10 +8,7 @@ export interface CacheOptions {
   uri?: string
   ttl?: number
   tbd?: number
-  cluster?: Array<{
-    port: number
-    host: string
-  }>
+  redis?: Redis.Redis | Redis.Cluster
 }
 
 class Cache {
@@ -19,10 +16,10 @@ class Cache {
   ttl = 3600 // time to live
   tbd = 3600 // time before deletion
 
-  constructor({ uri, ttl, tbd, cluster }: CacheOptions = {}) {
+  constructor({ uri, ttl, tbd, redis }: CacheOptions = {}) {
     try {
-      if (cluster) {
-        this.redis = new Redis.Cluster(cluster)
+      if (redis) {
+        this.redis = redis
       } else {
         this.redis = new Redis(uri || 'redis://127.0.1:6379')
       }
