@@ -26,6 +26,26 @@ module.exports = {
 }
 ```
 
+## Redis Cluster config
+
+```javascript
+cacheAdapter: RedisCache.init({
+    cluster: [
+      {
+        host: '<your-host>'
+        port: '<your-port>'
+      },
+      {
+        host: '<your-host-2>'
+        port: '<your-port-2>'
+      },
+      ...
+    ],
+    ttl: 15,
+    tbd: 3600,
+})
+```
+
 ## License
 
 MIT. Copyright 2020, Rakuraku Jyo.

@@ -8,16 +8,25 @@ export interface CacheOptions {
   uri?: string
   ttl?: number
   tbd?: number
+  cluster?: Array<{
+    port: number
+    host: string
+  }>
 }
 
 class Cache {
-  redis: Redis.Redis
+  redis: Redis.Redis | Redis.Cluster
   ttl = 3600 // time to live
   tbd = 3600 // time before deletion
 
-  constructor({ uri, ttl, tbd }: CacheOptions = {}) {
+  constructor({ uri, ttl, tbd, cluster }: CacheOptions = {}) {
     try {
-      this.redis = new Redis(uri || 'redis://127.0.1:6379')
+      if (cluster) {
+        this.redis = new Redis.Cluster(cluster)
+      } else {
+        this.redis = new Redis(uri || 'redis://127.0.1:6379')
+      }
+
       if (ttl) this.ttl = ttl
       if (tbd) this.tbd = tbd
     } catch (e) {
@@ -80,7 +89,11 @@ class Cache {
 
   async count(labels: Array<string>) {
     try {
-      const rv = await this.redis.mget(labels)
+      const promises = []
+      for (const label of labels) {
+        promises.push(this.redis.get(label))
+      }
+      const rv = await Promise.all(promises)
       return rv
         ? rv.map((x) => (x ? Number(x) : 0))
         : new Array(labels.length).fill(0)
