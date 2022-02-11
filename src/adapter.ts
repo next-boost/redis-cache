@@ -1,4 +1,5 @@
 import Cache, { CacheOptions } from './'
+import { stringify } from 'flatted'
 
 export class Adapter {
   cache?: Cache
@@ -19,7 +20,7 @@ export class Adapter {
 
   async init() {
     this.cache = new Cache(this.options)
-    console.log(`  Redis cache inited: ${JSON.stringify(this.options)}`)
+    console.log(`  Redis cache inited: ${stringify(this.options)}`)
     return this.cache
   }
 
