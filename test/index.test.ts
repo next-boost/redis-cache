@@ -1,5 +1,4 @@
 import { expect } from 'chai'
-import { readdirSync } from 'fs'
 import Redis from 'ioredis'
 
 import Cache from '../src'
