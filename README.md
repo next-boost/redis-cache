@@ -26,6 +26,18 @@ module.exports = {
 }
 ```
 
+## Passing your own Redis Client
+
+You can also provide an [ioredis](https://github.com/luin/ioredis) client or or cluster instance if you need advanced configuration
+
+```javascript
+cacheAdapter: RedisCache.init({
+    redis: new Redis.Cluster({...}),
+    ttl: 15,
+    tbd: 3600,
+})
+```
+
 ## License
 
 MIT. Copyright 2020, Rakuraku Jyo.
